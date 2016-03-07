@@ -202,9 +202,9 @@ do
         w, h = self:_keep_aspect(w, h)
         local res = handle_result(self, lib.MagickResizeImage(self.wand, w, h, filter(f), blur))
         if not res then return res end
-        local finished = lib.MagickHasNextImage(self.wand)
-        if not finished then 
-          return res
+        local has_next = lib.MagickHasNextImage(self.wand)
+        if has_next == 0 then 
+            break
         else
           res = handle_result(self, lib.MagickNextImage(self.wand))
           if not res then return res end
