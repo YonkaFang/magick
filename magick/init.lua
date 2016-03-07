@@ -434,7 +434,7 @@ thumb = function(img, size_str, output)
   if output then
     ret = img:write(output)
   else
-    ret = img:get_blob()
+    ret = img:get_images_blob()
   end
   return ret
 end

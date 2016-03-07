@@ -26,6 +26,7 @@ ffi.cdef([[  typedef void MagickWand;
   MagickBooleanType MagickWriteImage(MagickWand*, const char*);
 
   unsigned char* MagickGetImageBlob(MagickWand*, size_t*);
+  unsigned char *MagickGetImagesBlob(MagickWand *wand,size_t *length);
 
   void* MagickRelinquishMemory(void*);
 
