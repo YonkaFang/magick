@@ -68,6 +68,12 @@ ffi.cdef([[  typedef void MagickWand;
 
   MagickWand* MagickCoalesceImages(MagickWand*);
 
+  MagickBooleanType MagickNextImage(MagickWand *wand);
+  MagickBooleanType MagickHasNextImage(MagickWand *wand);
+
+  void MagickResetIterator(MagickWand *wand);
+
+
   PixelWand *NewPixelWand(void);
   PixelWand *DestroyPixelWand(PixelWand *);
 

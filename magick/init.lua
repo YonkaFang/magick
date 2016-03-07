@@ -194,8 +194,18 @@ do
       if not (can_resize) then
         error("Failed to load filter list, can't resize")
       end
-      w, h = self:_keep_aspect(w, h)
-      return handle_result(self, lib.MagickResizeImage(self.wand, w, h, filter(f), blur))
+      while true do
+        w, h = self:_keep_aspect(w, h)
+        local res = handle_result(self, lib.MagickResizeImage(self.wand, w, h, filter(f), blur))
+        if not res then return res end
+        local finished = lib.MagickHasNextImage(self.wand)
+        if not finished then 
+          return res
+        else
+          res = handle_result(self, lib.MagickNextImage(self.wand))
+          if not res then return res end
+        end
+      end
     end,
     adaptive_resize = function(self, w, h)
       w, h = self:_keep_aspect(w, h)
@@ -291,6 +301,11 @@ do
       local blob = ffi.gc(lib.MagickGetImageBlob(self.wand, len), lib.MagickRelinquishMemory)
       return ffi.string(blob, len[0])
     end,
+    get_images_blob = function(self)
+      local len = ffi.new("size_t[1]", 0)
+      local blob = ffi.gc(lib.MagickGetImagesBlob(self.wand, len), lib.MagickRelinquishMemory)
+      return ffi.string(blob, len[0])
+    end,    
     write = function(self, fname)
       return handle_result(self, lib.MagickWriteImage(self.wand, fname))
     end,

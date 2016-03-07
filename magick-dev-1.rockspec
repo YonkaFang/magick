@@ -2,13 +2,13 @@ package = "magick"
 version = "dev-1"
 
 source = {
-  url = "git://github.com/leafo/magick.git",
+  url = "git://github.com/YonkaFang/magick.git",
 }
 
 description = {
-  summary = "Lua bindings to ImageMagick for LuaJIT using FFI",
+  summary = "Lua bindings to ImageMagick for LuaJIT using FFI forked from Leaf Corcoran <leafot@gmail.com>",
   license = "MIT",
-  maintainer = "Leaf Corcoran <leafot@gmail.com>",
+  maintainer = "Yonka Fang <yonka.fang@foxmail.com>",
 }
 
 dependencies = {
