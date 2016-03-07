@@ -198,9 +198,13 @@ do
       if not (can_resize) then
         error("Failed to load filter list, can't resize")
       end
+      local res = handle_result(self, lib.MagickResetIterator(self.wand))
+      if not res then return res end
       while true do
         w, h = self:_keep_aspect(w, h)
-        local res = handle_result(self, lib.MagickResizeImage(self.wand, w, h, filter(f), blur))
+        res = handle_result(self, lib.MagickResizeImage(self.wand, w, h, filter(f), blur))
+        if not res then return res end
+        res = handle_result(self, lib.MagickSetImagePage(self.wand, w, h, 0, 0))
         if not res then return res end
         local has_next = lib.MagickHasNextImage(self.wand)
         if has_next == 0 then 
