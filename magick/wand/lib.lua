@@ -73,6 +73,7 @@ ffi.cdef([[  typedef void MagickWand;
 
   void MagickResetIterator(MagickWand *wand);
 
+  MagickWand *MagickDeconstructImages(MagickWand *wand);
 
   PixelWand *NewPixelWand(void);
   PixelWand *DestroyPixelWand(PixelWand *);

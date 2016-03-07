@@ -184,6 +184,10 @@ do
       self.wand = ffi.gc(lib.MagickCoalesceImages(self.wand), ffi.DestroyMagickWand)
       return true
     end,
+    deconstruct = function(self)
+        self.wand = ffi.gc(lib.MagickDeconstructImages(self.wand), ffi.DestroyMagickWand)
+        return true
+    end,
     resize = function(self, w, h, f, blur)
       if f == nil then
         f = "Lanczos2"
@@ -206,6 +210,7 @@ do
           if not res then return res end
         end
       end
+      return handle_result(self, lib.MagickResetIterator(self.wand))
     end,
     adaptive_resize = function(self, w, h)
       w, h = self:_keep_aspect(w, h)
@@ -305,7 +310,7 @@ do
       local len = ffi.new("size_t[1]", 0)
       local blob = ffi.gc(lib.MagickGetImagesBlob(self.wand, len), lib.MagickRelinquishMemory)
       return ffi.string(blob, len[0])
-    end,    
+    end,
     write = function(self, fname)
       return handle_result(self, lib.MagickWriteImage(self.wand, fname))
     end,
